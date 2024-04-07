@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -17,12 +13,17 @@
                     <li class="nav-item">
                         <RouterLink class="nav-link" :class="{ active: $route.path === '/about'}" to="/about">About</RouterLink>
                     </li>
+                    <!-- Movies link -->
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" :class="{ active: $route.path === '/movies'}" to="/movies">Movies</RouterLink>
+                    </li>
+                    <!-- Add Movie link -->
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" :class="{ active: $route.path === '/movies/create'}" to="/movies/create">Add Movie</RouterLink>
+                    </li>
                 </ul>
+                <!-- If you have a logout or user-specific actions, they would go here -->
             </div>
         </div>
     </nav>
 </template>
-
-<style scoped>
-
-</style>

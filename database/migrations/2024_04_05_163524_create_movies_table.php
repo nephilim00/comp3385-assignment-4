@@ -4,27 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateMoviesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Add a column for the movie title
-            $table->text('description'); // Add a column for the movie description
-            $table->string('poster'); // Add a column for the path and filename of the uploaded poster image
+            $table->string('title');
+            $table->text('description');
+            $table->string('poster'); // This will store the path to the image file
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('movies');
     }
-};
+}
