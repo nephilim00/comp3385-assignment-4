@@ -3,12 +3,10 @@
       <h2>Movies</h2>
       <div class="movies-grid">
         <div v-for="movie in movies" :key="movie.id" class="movie-card">
-          <div class="movie-content">
-            <img :src="movie.poster" :alt="movie.title" class="movie-poster" />
-            <div class="movie-info">
-              <h3>{{ movie.title }}</h3>
-              <p>{{ movie.description }}</p>
-            </div>
+          <img :src="movie.poster" :alt="movie.title" class="movie-poster" />
+          <div class="movie-info">
+            <h3>{{ movie.title }}</h3>
+            <p>{{ movie.description }}</p>
           </div>
         </div>
       </div>
@@ -52,28 +50,31 @@ h2 {
 .movie-card {
   display: flex;
   flex-direction: row; /* Ensure items are laid out in a row */
-  align-items: center; /* Center items vertically */
+  align-items: flex-start; /* Align items to the top */
   background: #fff;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.movie-card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Slight elevation effect on hover */
+}
+
+.movie-poster {
+  width: 200px; /* Adjust width to match the design */
+  object-fit: cover; /* Cover the whole area without stretching the image */
+  height: 100%; /* Stretch to the full height of the card */
 }
 
 .movie-info {
   padding: 1rem;
-  text-align: left; /* Align the text to the right side */
-  flex-grow: 1; /* Allow the info section to grow as needed */
+  text-align: left; /* Align text to the left side */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align text to the top */
 }
-
-
-.movie-poster {
-  width: auto; /* Auto width for the image */
-  flex-shrink: 0; /* Prevent the poster from shrinking */
-  height: 300px; /* Fixed height for the poster */
-  object-fit: cover; /* Cover the whole area without stretching the image */
-}
-
-
 
 @media (max-width: 768px) {
   .movies-grid {
@@ -87,7 +88,11 @@ h2 {
 
   .movie-poster {
     width: 100%; /* Full width for the image */
-    height: auto; /* Auto height to maintain aspect ratio */
+    height: auto; /* Adjust height automatically */
+  }
+
+  .movie-info {
+    order: -1; /* Move the movie-info above the poster on smaller screens */
   }
 }
 </style>
