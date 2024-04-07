@@ -3,6 +3,8 @@ import HomeView from '@/Pages/HomeView.vue'; // Make sure this path is correct
 import AboutView from '@/Pages/AboutView.vue'; // Make sure this path is correct
 import AddMovieView from '@/Pages/AddMovieView.vue';
 import MoviesView from '@/Pages/MoviesView.vue';
+import LoginView from '@/Pages/LoginView.vue';
+
 // Import other pages as needed
 
 const routes = [
@@ -22,11 +24,17 @@ const routes = [
     name: 'Movies',
     component: MoviesView,
   },
-  
+
   {
     path: '/movies/create',
     name: 'AddMovie',
     component: AddMovieView,
+  },
+
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
   },
 
   // ...other routes

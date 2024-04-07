@@ -19,16 +19,30 @@
   const movies = ref([]);
   
   onMounted(async () => {
-    try {
-      const response = await fetch('/api/v1/movies');
-      if (!response.ok) throw new Error('Failed to fetch movies');
-      movies.value = await response.json();
-    } catch (error) {
-      console.error(error.message);
-      // Display a user-friendly error message on the webpage
-      movies.value = [{ title: 'Error', description: 'Could not load movies. Please try again later.' }];
+  // Retrieve the JWT token from localStorage
+  const token = localStorage.getItem('jwt');
+
+  try {
+    // Include the JWT in the request headers for authentication
+    const response = await fetch('/api/v1/movies', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      // If the token is invalid or expired, you might want to redirect to login page
+      throw new Error('Failed to fetch movies. Please log in again.');
     }
-  });
+
+    movies.value = await response.json();
+  } catch (error) {
+    console.error(error.message);
+    // Handle errors, possibly redirect to a login page or show a message
+  }
+});
   </script>
   
   <style scoped>
