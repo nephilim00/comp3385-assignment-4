@@ -1,69 +1,54 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">COMP3385</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <RouterLink class="nav-link" :class="{ active: $route.path === '/' }" to="/">Home</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" :class="{ active: $route.path === '/about' }" to="/about">About</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" :class="{ active: $route.path === '/movies' }" to="/movies">Movies</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" :class="{ active: $route.path === '/movies/create' }" to="/movies/create">Add Movie</RouterLink>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-auto">
-            <RouterLink v-if="!isLoggedIn" class="nav-link" to="/login">Login</RouterLink>
-              <button v-else class="nav-link btn btn-link" @click="logout">Logout</button>
-              <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-            </li>
-          </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">COMP3385</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/">Home</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/about">About</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/movies">Movies</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/movies/create">Add Movie</RouterLink>
+          </li>
         </ul>
-        </div>
+        <ul class="navbar-nav ms-auto">
+  <li class="nav-item">
+    <RouterLink v-if="!isLoggedIn" class="nav-link" to="/login">Login</RouterLink>
+    <!-- Use handleLogout here -->
+    <a v-else class="nav-link" @click.prevent="handleLogout">Logout</a>
+  </li>
+</ul>
+
       </div>
-    </nav>
-  </template>
+    </div>
+  </nav>
+</template>
+
+<script setup>
+import { useRouter, RouterLink } from 'vue-router';
+import { useAuth } from '@/composables/useAuth'; // Adjust path as necessary
+
+const { isLoggedIn, logout } = useAuth();
+const router = useRouter();
+
+const handleLogout = async () => {
+  await logout();
+  router.push('/login');
+};
+</script>
+
+
   
-  <script setup>
-  import { ref, computed } from 'vue';
-  import { useRouter, RouterLink } from 'vue-router';
   
-  // Use a ref to trigger reactivity
-  const jwt = ref(localStorage.getItem('jwt'));
-  
-  // Computed property that will react to changes in jwt ref
-  const isLoggedIn = computed(() => jwt.value !== null);
-  
-  const router = useRouter();
-  
-  const logout = () => {
-    // TODO: Perform your logout logic here
-  
-    // Clear JWT from local storage and state
-    localStorage.removeItem('jwt');
-    jwt.value = null;
-  
-    // Redirect to login page
-    router.push('/login');
-  };
-  </script>
 
 
 
